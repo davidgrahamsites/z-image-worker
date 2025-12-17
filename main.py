@@ -3,14 +3,13 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-class GenerateRequest(BaseModel):
+class GenReq(BaseModel):
     prompt: str
 
-@app.post("/generate")
-def generate(req: GenerateRequest):
-    return {
-        "ok": True,
-        "prompt": req.prompt,
-        "message": "RunPod worker alive"
-    }
+@app.get("/health")
+def health():
+    return {"ok": True}
 
+@app.post("/generate")
+def generate(req: GenReq):
+    return {"ok": True, "received": req.prompt, "message": "worker stub (not generating yet)"}
